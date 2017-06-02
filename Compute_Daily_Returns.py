@@ -38,6 +38,16 @@ def compute_daily_returns(df):
     """Compute and return the daily return values."""
     # TODO: Your code here
     # Note: Returned DataFrame must have the same number of rows
+    daily_returns = df.copy()   # copy given DataFrame to match size and column names
+    daily_returns[1:] = (df[1:]/df[:-1].values) - 1     # .values is necessary to access the underlying numpy array
+    daily_returns.ix[0, :] = 0  # Set daily returns for row 0 to 0
+    return daily_returns
+
+def compute_daily_returns_with_pandas(df):
+    """Compute and return the daily return values."""
+    daily_returns = (df / df.shift(1)) - 1 # much easier with pandas
+    daily_returns.ix[0, :] = 0  # Pandas leave the 0th row full of NaNs
+    return daily_returns
 
 
 def test_run():
