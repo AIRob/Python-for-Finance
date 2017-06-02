@@ -25,7 +25,23 @@ def test_run():
 
     # Plot a histogram
     daily_returns.hist(bins=20)    #default number of bins is 10, changing the number of bins to 20
+    # Get mean and standard deviation
+    mean = daily_returns['SPY'].mean()
+    print "mean=", mean
+    std = daily_returns['SPY'].std()
+    print "std=", std
+
+    # Add the mean to the graph
+    plt.axvline(mean, color='w', linestyle='dashed', linewidth=2)
+    #For standard deviation we want plus and minus standard deviation so do it twice
+    plt.axvline(std, color='r', linestyle='dashed', linewidth=2)
+    plt.axvline(-std, color='r', linestyle='dashed', linewidth=2)
+
     plt.show()
+
+    # Compute kurtosis
+    print "Kurtosis, if positive it's a fat tail with lots of outliers:"
+    print daily_returns.kurtosis()
 
 if __name__ == "__main__":
     test_run()
